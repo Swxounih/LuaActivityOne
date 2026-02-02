@@ -19,7 +19,7 @@ balloon.x = display.contentCenterX
 balloon.y = display.contentCenterY
 
 physics.addBody( platform, "static" )
-physics.addBody( balloon, "dynamic", { radius=50, bounce=0.1 } )
+physics.addBody( balloon, "dynamic", { radius=55, bounce=0.5 } )
 
 local function pushBalloon()
 	balloon:applyLinearImpulse( 0, -0.75, balloon.x, balloon.y )
