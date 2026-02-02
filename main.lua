@@ -25,6 +25,8 @@ physics.addBody( platform, "static" )
 physics.addBody( balloon, "dynamic", { radius=50, bounce=0.5 } )
 
 
+
+
 local function restartGame()
     -- Reset variables
     tapCount = 0
