@@ -33,15 +33,13 @@ local restartText = display.newText	( "Reset", display.contentCenterX-150, displ
 
 
 local function restartGame ()
-	balloon.x = display.contentCenterX
-	balloon.y = display.contentCenterY
-	balloon.y = display.contentHeight-70
+	-- balloon.x = display.contentCenterX
+	-- balloon.y = display.contentCenterY
+	-- balloon.y = display.contentHeight-70
 	tapCount = 0
 	tapText.text = tapCount
 	
-	-- balloon.angularVelocity = 0
-	-- balloon:setLinearVelocity( 0, 0 )
-	
+
 end
 
 restartText:addEventListener( "tap", restartGame )
