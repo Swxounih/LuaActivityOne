@@ -13,7 +13,7 @@ platform.x = display.contentCenterX
 platform.y = display.contentHeight-25
 
 local tapText = display.newText( tapCount, display.contentCenterX, 50, native.systemFont, 100 )
---tapText:setFillColor( 0, 0, 0 )
+----tapText:setFillColor( 0, 0, 0 )
 
 local balloon = display.newImageRect( "balloon.png", 112, 112 )
 balloon.x = display.contentCenterX
@@ -27,10 +27,6 @@ local function pushBalloon()
 	tapCount = tapCount + 1
 	tapText.text = tapCount
 end
-<<<<<<< HEAD
-
-balloon:addEventListener( "tap", pushBalloon )
-=======
 
 
 
@@ -117,4 +113,3 @@ Runtime:addEventListener("collision", onCollision)
 
 balloon:addEventListener( "tap", pushBalloon )
 restartText:addEventListener( "tap", reset )
->>>>>>> NewBranch
