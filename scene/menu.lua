@@ -14,7 +14,6 @@ local restartButton
 local gameOverText
 
 
-
 local background = display.newImageRect( sceneGroup,"images/background.jpg", 480, 800 )
 background.x = display.contentCenterX
 background.y = display.contentCenterY
@@ -40,8 +39,6 @@ local function pushBalloon()
     tapText.text = tapCount
 
 end
-
-
 
 
 local restartText = display.newText	( "Reset", display.contentCenterX+170, display.contentHeight-760, native.systemFont, 30 )	
@@ -145,8 +142,6 @@ local function checkBounds(event)
 end
 
 Runtime:addEventListener("enterFrame", checkBounds)
-
-
 
 
 Runtime:addEventListener("collision", onCollision)
