@@ -67,7 +67,7 @@ function scene:create(event)
 
     physics.addBody(platform, "static")
     -- Fit the physics radius to the balloon image (112x112 -> radius ~56)
-    physics.addBody(balloon, "dynamic", {radius =56, bounce = 0.05})
+    physics.addBody(balloon, "dynamic", {radius =55, bounce = 0.05})
 
     --- 3. Helper Function: Create Buttons ---
     local function createCustomButton(label, yPos, color, onTap)
@@ -307,7 +307,6 @@ function scene:create(event)
         musicBtn:setFillColor(0,0,0,0)
         musicBtn:addEventListener("tap", function() toggleMusic(musicLabel); return true end)
 
-        -- (Timer UI removed)
         -- High score row
         local hsText = display.newText(menuPanelGroup, "High Score: " .. tostring(highScore), display.contentCenterX, display.contentCenterY + 60, native.systemFontBold, 24)
         hsText:setFillColor(1)
