@@ -18,16 +18,16 @@ local background = display.newImageRect( sceneGroup,"images/background.jpg", 480
 background.x = display.contentCenterX
 background.y = display.contentCenterY
 
-local platform = display.newImageRect( sceneGroup,"images/platform.png", 500, 50 )
+local platform = display.newImageRect( sceneGroup,"images/platform.png", 500, 59 )
 platform.x = display.contentCenterX
-platform.y = display.contentHeight-25
+platform.y = display.contentHeight-50
 
-local tapText = display.newText( tapCount, display.contentCenterX, 60, native.systemFont, 100 )
-tapText:setFillColor( 0, 1, 0 )
+local tapText = display.newText( tapCount, display.contentCenterX, 60, native.systemFont, 60 )
+--tapText:setFillColor( 0, 1, 0 )
 
-local balloon = display.newImageRect( sceneGroup,"images/balloon.png", 112, 112 )
+local balloon = display.newImageRect( sceneGroup,"images/balloon.png", 120, 120 )
 balloon.x = display.contentCenterX
-balloon.y = display.contentCenterY
+balloon.y = display.contentCenterY 
 
 physics.addBody( platform, "static" )
 physics.addBody( balloon, "dynamic", { radius=55, bounce=0.5 } )
@@ -42,7 +42,7 @@ end
 
 
 local restartText = display.newText	( "Reset", display.contentCenterX+170, display.contentHeight-760, native.systemFont, 30 )	
-restartText:setFillColor(0, 1, 0)
+--restartText:setFillColor(0, 1, 0)
 
 local function reset()
 	-- balloon.x = display.contentCenterX
@@ -98,7 +98,7 @@ local function doGameOver()
         display.contentCenterX,
         display.contentCenterY - 100,
         native.systemFontBold,
-        70
+        60
     )
     gameOverText:setFillColor(1, 0, 0)
     -- Restart Button
@@ -107,9 +107,9 @@ local function doGameOver()
         display.contentCenterX,
         display.contentCenterY + 50,
         native.systemFontBold,
-        50
+        45
     )
-    restartButton:setFillColor(0, 1, 0)
+    --restartButton:setFillColor(0, 1, 0)
     restartButton:addEventListener("tap", restartGame)
 end
 
