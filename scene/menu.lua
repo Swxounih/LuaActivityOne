@@ -1,159 +1,64 @@
---yasmien
-local composer = require("composer")
-local scene =composer.newScene()
 
-local physics = require( "physics" )
-physics.start()
+local composer = require( "composer" )
+local scene = composer.newScene()
 
-function scene:create( e )
-local sceneGroup =self.view
-
-local tapCount = 0
-local gameOver = false
-local restartButton
-local gameOverText
+local backgound, platform, baloon, tapText, startText
 
 
-local background = display.newImageRect( sceneGroup,"images/background.jpg", 480, 800 )
-background.x = display.contentCenterX
-background.y = display.contentCenterY
+function scene:create( event )
+	local sceneGroup = self.view
 
-local platform = display.newImageRect( sceneGroup,"images/platform.png", 500, 50 )
-platform.x = display.contentCenterX
-platform.y = display.contentHeight-25
+local bg = display.newImageRect("images/bg.jpg", 1440, 3088)
+bg.x = display.contentCenterX
+bg.y = display.contentCenterY
 
-local tapText = display.newText( tapCount, display.contentCenterX, 60, native.systemFont, 100 )
-tapText:setFillColor( 0, 1, 0 )
+local pf = display.newImageRect("images/platform.png", 500, 180)
+pf.x = display.contentCenterX
+pf.y = display.contentCenterY+1500
 
-local balloon = display.newImageRect( sceneGroup,"images/balloon.png", 112, 112 )
-balloon.x = display.contentCenterX
-balloon.y = display.contentCenterY
+local bl = display.newImageRect("images/baloon.png", 700, 700)
+bl.x = display.contentCenterX 
+bl.y = display.contentCenterY - 250
 
-physics.addBody( platform, "static" )
-physics.addBody( balloon, "dynamic", { radius=55, bounce=0.5 } )
+local background = display.newRect(display.contentCenterX, display.contentCenterY, display.actualContentWidth, display.actualContentHeight)
+background:setFillColor(0, 0, 0 , 0.1) -- RGB
+local startText = display.newText( "TAP THE BALOON", display.contentCenterX -10,  400,  native.systemFontBold, 140)
+startText:setFillColor( 300, 0, 0 )
 
-local function pushBalloon()
-    if gameOver then return end
-    balloon:applyLinearImpulse( 0, -0.75, balloon.x, balloon.y )
-    tapCount = tapCount + 1
-    tapText.text = tapCount
+local tapText = display.newText( "START", display.contentCenterX -10,  1500,  native.systemFontBold, 250)
+tapText:setFillColor( 255, 255, 0 )
 
+local function onPush( )
+	composer.gotoScene("scene.game") 
 end
 
+sceneGroup:insert(bg)
+sceneGroup:insert(pf)
+sceneGroup:insert(bl)
+sceneGroup:insert(background)
+sceneGroup:insert(startText)
+sceneGroup:insert(tapText)
 
-local restartText = display.newText	( "Reset", display.contentCenterX+170, display.contentHeight-760, native.systemFont, 30 )	
-restartText:setFillColor(0, 1, 0)
-
-local function reset()
-	-- balloon.x = display.contentCenterX
-	-- balloon.y = display.contentCenterY
-	-- balloon.y = display.contentHeight-70
-	tapCount = 0
-	tapText.text = tapCount
-
-
+bl:addEventListener("tap", onPush)
+tapText:addEventListener("tap", onPush)
 end
 
-local function restartGame()
-    -- Reset variables
-    tapCount = 0
-    tapText.text = tapCount
-    gameOver = false
-
-    -- Reset balloon position
-    balloon.x = display.contentCenterX
-    balloon.y = display.contentCenterY
-    balloon:setLinearVelocity(0, 0)
-
-    -- Restart physics
-    physics.start()
-
-	--remove game over text
-	if gameOverText then
-        gameOverText:removeSelf()
-        gameOverText = nil
-    end
-    -- Remove restart button
-    if restartButton then
-        restartButton:removeSelf()
-        restartButton = nil
-    end
+function scene:show( event )
+	local phase = event.phase
+	if phase == "did" then
+		-- Scene is fully shown
+	end
 end
 
-
-local function doGameOver()
-    if gameOver then return end
-    gameOver = true
-    print("GAME OVER")
-    physics.pause()
-
-    if gameOverText then
-        gameOverText:removeSelf()
-        gameOverText = nil
-    end
-
-    -- Game Over Text
-    gameOverText = display.newText(
-        "GAME OVER",
-        display.contentCenterX,
-        display.contentCenterY - 100,
-        native.systemFontBold,
-        70
-    )
-    gameOverText:setFillColor(1, 0, 0)
-    -- Restart Button
-    restartButton = display.newText(
-        "RESTART",
-        display.contentCenterX,
-        display.contentCenterY + 50,
-        native.systemFontBold,
-        50
-    )
-    restartButton:setFillColor(0, 1, 0)
-    restartButton:addEventListener("tap", restartGame)
+function scene:hide( event )
+	local phase = event.phase
 end
 
-
-local function onCollision(event)
-    if event.phase == "began" then
-        
-        if ( (event.object1 == balloon and event.object2 == platform) or
-             (event.object1 == platform and event.object2 == balloon) ) then
-            if gameOver then return end
-            doGameOver()
-        end
-    end
+function scene:destroy( event )
 end
 
-local function bungosataas(event)
-    if(balloon.y == display.contentHeight) then
-        restartText.isVisible = true
-    
-    end
-
-end
-
-local function checkBounds(event)
-    if gameOver then return end
-    local top = balloon.y - (balloon.height or 0)/2
-    if top < 0 then
-        doGameOver()
-    end
-end
-
-Runtime:addEventListener("enterFrame", checkBounds)
-
-
-Runtime:addEventListener("collision", onCollision)
-
-
-balloon:addEventListener( "tap", pushBalloon )
-restartText:addEventListener( "tap", reset )
-
-sceneGroup: insert(background)
-sceneGroup: insert(platform)
-sceneGroup: insert(balloon)
-end
-
-scene:addEventListener("create", scene)
+scene:addEventListener( "create", scene )
+scene:addEventListener( "show", scene )
+scene:addEventListener( "hide", scene )
+scene:addEventListener( "destroy", scene )
 return scene
