@@ -14,7 +14,7 @@ local restartButton
 local gameOverText
 
 
-local background = display.newImageRect( sceneGroup,"images/background.jpg", 480, 800 )
+local background = display.newImageRect( sceneGroup,"images/road.jpg", 480, 800 )
 background.x = display.contentCenterX
 background.y = display.contentCenterY
 
@@ -25,7 +25,7 @@ platform.y = display.contentHeight-25
 local tapText = display.newText( tapCount, display.contentCenterX, 60, native.systemFont, 100 )
 tapText:setFillColor( 0, 1, 0 )
 
-local balloon = display.newImageRect( sceneGroup,"images/balloon.png", 112, 112 )
+local balloon = display.newImageRect( sceneGroup,"images/glinda.png", 130, 130 )
 balloon.x = display.contentCenterX
 balloon.y = display.contentCenterY
 
