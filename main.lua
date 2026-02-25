@@ -2,7 +2,6 @@ local composer = require ("composer")
 
 --local function onComplete ()
     composer.gotoScene("scene.menu")
-
 --end
 
 -- asmir ito yung commit ko kapag kinommit ko to sa github makikita mo sa local device mo kapag nag pull origin ka 
