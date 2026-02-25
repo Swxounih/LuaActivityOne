@@ -10,3 +10,4 @@ local composer = require ("composer")
 -- ta's makikita din nila yung mga changes na ginawa ko sa code, at kung anong mga lines yung binago ko sa code, at kung anong mga lines yung nadagdag ko sa code, at kung anong mga lines yung nabura ko sa code
 -- kapag nakikita niyo to ibig-sabihin may chika ako bukas 
 -- para maconfirm na nakikita niyo to chat kayo sa gc ng "Fries" "Milktea" "Borger" kahit ano diyan HAHAHAHA 
+-- napakaganda ni asmir joke
