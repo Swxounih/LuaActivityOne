@@ -1,7 +1,7 @@
 local composer = require( "composer" )
 local scene = composer.newScene()
 
-local backgound, platform, baloon, tapText, resetText, startText, gameoverText, restartText
+local game_bg, platform, archon, tapText, resetText, startText, gameover_bg, gameoverText, restartText
 
 
 local physics = require( "physics" )
@@ -13,36 +13,37 @@ local gameStarted = false
 function scene:create( event )
 	local sceneGroup = self.view
 
-	local bg = display.newImageRect("images/bg.jpg", 1440, 3088)
-	bg.x = display.contentCenterX
-	bg.y = display.contentCenterY
+	game_bg= display.newImageRect("images/mondstadt.png", 1440, 3100)
+	game_bg.x = display.contentCenterX
+	game_bg.y = display.contentCenterY
 
-	local pf = display.newImageRect("images/platform.png", 500, 180)
-	pf.x = display.contentCenterX
-	pf.y = display.contentCenterY+1500
+	-- platform = display.newImageRect("images/platform.png", 500, 180)
+	-- platform.x = display.contentCenterX
+	-- platform.y = display.contentCenterY+1500
 
-	local bl = display.newImageRect("images/baloon.png", 700, 700)
-	bl.x = display.contentCenterX
-	bl.y = display.contentCenterY
+	archon = display.newImageRect("images/venti.png", 700, 700)
+	archon.x = display.contentCenterX
+	archon.y = display.contentCenterY
 
-	local tapText = display.newText( tapCount, display.contentCenterX, 300, native.systemFont, 250 )
+	tapText = display.newText( tapCount, display.contentCenterX, 300, native.systemFont, 250 )
 	tapText:setFillColor( 255, 0, 0 )
-	local resetText = display.newText( "Reset", display.contentCenterX -370,  270,  native.systemFont, 150)
+	resetText = display.newText( "Reset", display.contentCenterX -370,  270,  native.systemFont, 150)
 	resetText:setFillColor( 255, 0, 0 )
 
-	physics.addBody( pf, "static" )
-	physics.addBody( bl, "dynamic", { radius=300, bounce=-0.25 } )
+	-- physics.addBody( platform, "static|" )
+	physics.addBody( archon, "dynamic", { radius=300, bounce=-0.7 } )
 
-	local function pushBl()
+	local function pushArchon()
 		if gameStarted then
-			bl:applyLinearImpulse( 0, -50, bl.x, bl.y )
+			archon:applyLinearImpulse( 0, -45, archon.x, archon.y )
 			tapCount = tapCount + 1
 			tapText.text = tapCount
 		end
 	end
 
 	local function resetBl()
-		tapText.text = 0
+		tapCount = 0
+		tapText.text = tapCount
 	end
 
 	local function restartGame()
@@ -50,47 +51,46 @@ function scene:create( event )
 		tapText.text = tapCount
 		gameStarted = true
 		physics.start()
-		bl.x = display.contentCenterX
-		bl.y = display.contentCenterY
-		bl:setLinearVelocity(0, 0)
+		archon.x = display.contentCenterX
+		archon.y = display.contentCenterY
+		archon:setLinearVelocity(0, 0)
 		if gameoverText then
 			gameoverText:removeSelf()
 		end
 		if restartText then
 			restartText:removeSelf()
 		end
-		if background then
-			background:removeSelf()
+		if gameover_bg then
+			gameover_bg:removeSelf()
 		end
 	end
 
-	bl:addEventListener( "tap", pushBl )
+	archon:addEventListener( "tap", pushArchon )
 	resetText:addEventListener("tap", resetBl)
 
 	Runtime:addEventListener("enterFrame", function()
 		if gameStarted then
-			if bl.y <= (display.contentCenterY - 1544 + 300) or bl.y >= (display.contentCenterY + 1400 - 300) then
+			if archon.y <= (display.contentCenterY - 1544 + 300) or archon.y >= (display.contentCenterY + 1500 - 300) then
 				physics.pause()
 				gameStarted = false
 				tapText.text = "0"
-				background = display.newRect(display.contentCenterX, display.contentCenterY, display.actualContentWidth, display.actualContentHeight)
-				background:setFillColor(0.1, 0.1, 0.3, 0.8)
+				gameover_bg = display.newRect(display.contentCenterX, display.contentCenterY, display.actualContentWidth, display.actualContentHeight)
+				gameover_bg:setFillColor(0.1, 0.1, 0.3, 0.8)
 				gameoverText = display.newText( "GAMEOVER", display.contentCenterX -10,  1200,   native.systemFontBold, 200)
 				gameoverText:setFillColor( 255, 0, 0, 0.8 )
 				restartText = display.newText( "RESTART", display.contentCenterX -10,  1500,   native.systemFontBold, 200)
 				restartText:setFillColor( 0, 255, 0, 0.8 )
-				
 				restartText:addEventListener("tap", restartGame)
-				sceneGroup:insert(background)
+				sceneGroup:insert(gameover_bg)
 				sceneGroup:insert(gameoverText)
 				sceneGroup:insert(restartText)
 			end
 		end
 	end)
 
-	sceneGroup:insert(bg)
-	sceneGroup:insert(pf)
-	sceneGroup:insert(bl)
+	sceneGroup:insert(game_bg)
+	-- sceneGroup:insert(platform)
+	sceneGroup:insert(archon)
 	sceneGroup:insert(tapText)
 	sceneGroup:insert(resetText)
 
